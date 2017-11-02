@@ -29,7 +29,7 @@ export default function graphql(query, variables) {
 				return (
 					this.state.loading ? (
 						<View style={styles.loader}>
-							<ActivityIndicator />
+							<ActivityIndicator size="large" />
 						</View>
 					) : (
 						<Component {...this.props} graphql={{data: this.state.data}} />

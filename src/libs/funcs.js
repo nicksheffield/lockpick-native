@@ -1,0 +1,1 @@
+export const get = (obj, prop) => prop.split('.').reduce((s,x) => isNone(s) ? undefined : s[x], obj)

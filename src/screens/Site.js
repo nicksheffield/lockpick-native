@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, ScrollView, Platform } from 'react-native'
+import { ScrollView, Platform } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import graphql from '../decorators/HOCs/@graphql'
 
-@graphql(`
+let getLogins = `
 	query($site_id:Int!) {
 		logins(site_id: $site_id) {
 			id
@@ -11,9 +11,9 @@ import graphql from '../decorators/HOCs/@graphql'
 			password
 		}
 	}
-`, (props) => ({
-	site_id: props.navigation.state.params.site.id
-}))
+`
+
+@graphql(getLogins, (props) => ({ site_id: props.navigation.state.params.site.id }))
 export default class Site extends React.Component {
 	render() {
 		let site = this.props.navigation.state.params.site
@@ -51,30 +51,3 @@ export default class Site extends React.Component {
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	loader: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'flex-start',
-		justifyContent: 'center',
-		paddingHorizontal: 10
-	},
-	list: {
-		width: '100%',
-		borderTopWidth: 1,
-		borderTopColor: '#ddd'
-	},
-	item: {
-		padding: 20,
-		borderBottomWidth: 1,
-		borderBottomColor: '#ddd'
-	},
-	subtitle: {
-		color: '#999'
-	}
-})
