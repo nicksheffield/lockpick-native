@@ -5,13 +5,9 @@ import gqlFetch from '../../libs/graphql'
 export default function graphql(query, variables) {
 	return (Component) => {
 		return class GraphQL extends React.Component {
-			constructor() {
-				super()
-
-				this.state = {
-					loading: true,
-					data: {}
-				}
+			state = {
+				loading: true,
+				data: {}
 			}
 
 			componentWillMount() {

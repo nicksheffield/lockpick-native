@@ -11,13 +11,9 @@ import graphql from '../decorators/HOCs/@graphql'
 			id, name, url
 		}
 	}
-`, (props) => {
-	console.log('props', props)
-
-	return {
-		client_id: props.navigation.state.params.client.id
-	}
-})
+`, (props) => ({
+	client_id: props.navigation.state.params.client.id
+}))
 export default class Client extends React.Component {
 
 	@bind
