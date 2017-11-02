@@ -48,7 +48,7 @@ export default class Site extends React.Component {
 					</List>
 				))}
 			</ScrollView>
-		);
+		)
 	}
 }
 
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
 	subtitle: {
 		color: '#999'
 	}
-});
+})

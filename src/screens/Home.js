@@ -37,7 +37,7 @@ export default class Home extends React.Component {
 					))}
 				</List>
 			</ScrollView>
-		);
+		)
 	}
 }
 
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
 	subtitle: {
 		color: '#999'
 	}
-});
+})

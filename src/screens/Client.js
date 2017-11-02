@@ -39,7 +39,7 @@ export default class Client extends React.Component {
 					))}
 				</List>
 			</ScrollView>
-		);
+		)
 	}
 }
 
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
 	subtitle: {
 		color: '#999'
 	}
-});
+})
