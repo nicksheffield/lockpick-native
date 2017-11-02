@@ -5,7 +5,8 @@ export default class Contact extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text>This is contact</Text>
+				<Text>This is the contact screen.</Text>
+				<Text>You could put whatever you want here.</Text>
 			</View>
 		);
 	}

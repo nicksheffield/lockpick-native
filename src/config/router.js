@@ -11,7 +11,7 @@ export const DetailStack = StackNavigator({
 	Home: {
 		screen: Home,
 		navigationOptions: {
-			title: 'Home'
+			title: 'Client list'
 		}
 	},
 	Client: {
@@ -43,4 +43,6 @@ export const Tabs = TabNavigator({
 			tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={35} color={tintColor} />
 		}
 	}
+}, {
+	tabBarPosition: 'bottom'
 })

@@ -1,66 +1,53 @@
 import React from 'react'
-import { StyleSheet, Text, View, ActivityIndicator, FlatList, Button, TouchableOpacity } from 'react-native'
-import Title from '../components/title'
-import graphql from '../libs/graphql'
+import { StyleSheet, ScrollView, Platform } from 'react-native'
+import { List, ListItem } from 'react-native-elements'
+import graphql from '../decorators/HOCs/@graphql'
 
-const getLogins = `
-	query($site_id:Int!){
+@graphql(`
+	query($site_id:Int!) {
 		logins(site_id: $site_id) {
 			id
 			username
 			password
 		}
 	}
-`
-
+`, (props) => ({
+	site_id: props.navigation.state.params.site.id
+}))
 export default class Site extends React.Component {
-	constructor() {
-		super()
-
-		this.state = {
-			loading: true,
-			data: {}
-		}
-	}
-
-	componentDidMount() {
-		graphql.query(getLogins, {
-			site_id: this.props.navigation.state.params.site.id
-		}).then(res => {
-			this.setState({
-				loading: false,
-				data: res.data
-			})
-		})
-	}
-
-	clicked(item) {
-		return (event) => {
-			console.log('clicked', item)
-		}
-	}
-
 	render() {
 		let site = this.props.navigation.state.params.site
-		let logins = this.state.data.logins
+		let logins = this.props.graphql.data.logins
 
 		return (
-			this.state.loading ? (
-				<View style={styles.loader}>
-					<ActivityIndicator />
-				</View>
-			) : (
-				<View style={styles.container}>
-					<Text>{site.name}</Text>
-
-					{logins.map(login => (
-						<View key={login.id} style={styles.item}>
-							<Text>{login.username}</Text>
-							<Text>{login.password}</Text>
-						</View>
-					))}
-				</View>
-			)
+			<ScrollView>
+				{logins.map(login => (
+					<List key={login.id}>
+						<ListItem
+							title={login.username}
+							leftIcon={{
+								name: 'user',
+								type: 'simple-line-icon',
+								color: '#888'
+							}}
+							hideChevron
+						/>
+						<ListItem
+							title={login.password}
+							leftIcon={{
+								name: 'key',
+								type: 'simple-line-icon',
+								color: '#888'
+							}}
+							hideChevron
+							titleStyle={{
+								fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
+								fontWeight: 'bold'
+							}}
+						/>
+					</List>
+				))}
+			</ScrollView>
 		);
 	}
 }
@@ -85,7 +72,7 @@ const styles = StyleSheet.create({
 	item: {
 		padding: 20,
 		borderBottomWidth: 1,
-		borderBottomColor: '#000'
+		borderBottomColor: '#ddd'
 	},
 	subtitle: {
 		color: '#999'

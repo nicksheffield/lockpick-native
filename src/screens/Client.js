@@ -1,39 +1,26 @@
 import React from 'react'
-import { StyleSheet, Text, View, ActivityIndicator, FlatList, Button, TouchableOpacity } from 'react-native'
-import Title from '../components/title'
-import graphql from '../libs/graphql'
+import { StyleSheet, ScrollView } from 'react-native'
+import { List, ListItem } from 'react-native-elements'
+import { bind } from 'decko'
+import graphql from '../decorators/HOCs/@graphql'
 
-const getSites = `
+
+@graphql(`
 	query($client_id:Int!){
 		sites(client_id: $client_id) {
-			id
-			name
-			url
+			id, name, url
 		}
 	}
-`
+`, (props) => {
+	console.log('props', props)
 
+	return {
+		client_id: props.navigation.state.params.client.id
+	}
+})
 export default class Client extends React.Component {
-	constructor() {
-		super()
 
-		this.state = {
-			loading: true,
-			data: {}
-		}
-	}
-
-	componentDidMount() {
-		graphql.query(getSites, {
-			client_id: this.props.navigation.state.params.client.id
-		}).then(res => {
-			this.setState({
-				loading: false,
-				data: res.data
-			})
-		})
-	}
-
+	@bind
 	clicked(item) {
 		return (event) => {
 			this.props.navigation.navigate('Site', {site: item})
@@ -42,30 +29,20 @@ export default class Client extends React.Component {
 
 	render() {
 		let client = this.props.navigation.state.params.client
-		let sites = this.state.data.sites
+		let sites = this.props.graphql.data.sites
 
 		return (
-			this.state.loading ? (
-				<View style={styles.loader}>
-					<ActivityIndicator />
-				</View>
-			) : (
-				<View style={styles.container}>
-					<FlatList
-						style={styles.list}
-						data={sites}
-						keyExtractor={(item, index) => index}
-						renderItem={({item}) => (
-							<View style={styles.item}>
-								<TouchableOpacity onPress={this.clicked(item).bind(this)}>
-									<Text>{item.name}</Text>
-									<Text style={styles.subtitle}>{item.url}</Text>
-								</TouchableOpacity>
-							</View>
-						)}
-					/>
-				</View>
-			)
+			<ScrollView>
+				<List containerStyle={{marginTop: -1}}>
+					{sites.map(site => (
+						<ListItem
+							key={site.id}
+							title={site.name}
+							onPress={this.clicked(site)}
+						/>
+					))}
+				</List>
+			</ScrollView>
 		);
 	}
 }
@@ -90,7 +67,7 @@ const styles = StyleSheet.create({
 	item: {
 		padding: 20,
 		borderBottomWidth: 1,
-		borderBottomColor: '#000'
+		borderBottomColor: '#ddd'
 	},
 	subtitle: {
 		color: '#999'

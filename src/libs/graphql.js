@@ -8,20 +8,12 @@ const fetchOpts = {
 	}
 }
 
-const queryGQL = (url, query, variables) => {
-	return fetch(url, {...fetchOpts, body: JSON.stringify({ query, variables })})
-		.then(res => res.json())
-}
-
-const mutateGQL = (url, query, variables) => {
-
-}
-
 export default graphql = {
 	query: (query, variables) => {
-		return queryGQL(apiEndpoint, query, variables)
+		return fetch(apiEndpoint, {...fetchOpts, body: JSON.stringify({ query, variables })})
+			.then(res => res.json())
 	},
 	mutate: (query, variables) => {
-		return mutateGQL(apiEndpoint, query, variables)
+
 	}
 }
