@@ -1,12 +1,10 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
-import { bind } from 'decko'
-import graphql from '../decorators/HOCs/@graphql'
+import loadGraphQL from '../decorators/HOCs/@loadGraphQL'
 
-
-let getSites = `
-	query($client_id:Int!){
+let query = `
+	query($client_id:Int!) {
 		sites(client_id: $client_id) {
 			id, name, url
 			logins { id }
@@ -14,10 +12,10 @@ let getSites = `
 	}
 `
 
-@graphql(getSites, (props) => ({ client_id: props.navigation.state.params.client.id} ))
-export default class Client extends React.Component {
+@loadGraphQL(query, (props) => ({ client_id: props.navigation.state.params.client.id} ))
+export default class ViewClient extends React.Component {
 
-	select = item => () => this.props.navigation.navigate('Site', {site: item})
+	select = item => () => this.props.navigation.navigate('ViewSite', {site: item})
 
 	render() {
 		let client = this.props.navigation.state.params.client

@@ -2,26 +2,26 @@ import React from 'react'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 
-import Home from '../screens/Home'
+import ClientList from '../screens/ClientList'
 import Contact from '../screens/Contact'
-import Client from '../screens/Client'
-import Site from '../screens/Site'
+import ViewClient from '../screens/ViewClient'
+import ViewSite from '../screens/ViewSite'
 
 export const DetailStack = StackNavigator({
-	Home: {
-		screen: Home,
+	ClientList: {
+		screen: ClientList,
 		navigationOptions: {
 			title: 'Client list'
 		}
 	},
-	Client: {
-		screen: Client,
+	ViewClient: {
+		screen: ViewClient,
 		navigationOptions: ({ navigation }) => ({
 			title: navigation.state.params.client.name
 		})
 	},
-	Site: {
-		screen: Site,
+	ViewSite: {
+		screen: ViewSite,
 		navigationOptions: ({ navigation }) => ({
 			title: navigation.state.params.site.name
 		})
